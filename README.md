@@ -4,7 +4,7 @@ An early-warning benchmark for depegs of synthetic and yield-bearing stablecoins
 
 > **Onset, Escalation, and Contagion: What Warns of Stablecoin and Liquid-Staking Depegs?**
 > Zhengdong Zhu. Submitted to *IEEE Access*, 2026.
-> Data archive: [doi:10.5281/zenodo.23158110](https://doi.org/10.5281/zenodo.23158110) (CC BY 4.0). Each code release is archived on Zenodo.
+> Data archive: [doi:10.5281/zenodo.23158110](https://doi.org/10.5281/zenodo.23158110) (CC BY 4.0). Code archive, all versions: [doi:10.5281/zenodo.23162217](https://doi.org/10.5281/zenodo.23162217) (MIT).
 
 Version 1.1 (October 2026). The benchmark follows 52 Ethereum assets hour by hour from January 2023 to September 2026 and asks three questions along the life of a depeg.
 
@@ -208,6 +208,8 @@ See `CITATION.cff`, which GitHub shows as "Cite this repository"; `.zenodo.json`
 
 > Z. Zhu, "Onset, escalation, and contagion: What warns of stablecoin and liquid-staking depegs?" submitted to *IEEE Access*, 2026.
 
-To cite the data archive itself:
+To cite the data or the code themselves:
 
 > Z. Zhu, "depeg-ews data archive: Labels, features, lending-exposure graph and results," version 1.1, Zenodo, 2026, doi: 10.5281/zenodo.23158110.
+>
+> Z. Zhu, "depeg-ews: An early-warning benchmark for stablecoin and liquid-staking depegs," version 1.1.0, Zenodo, 2026, doi: 10.5281/zenodo.23162218.
