@@ -1,0 +1,12 @@
+-- First block of every UTC hour, {start} to {end_excl} (exclusive).
+-- The chain state at the start of hour H is the state after block (block_number - 1).
+-- Scans only block_number and block_timestamp of the blocks table (a few GB).
+-- Export the result as CSV and pass it to: scripts/fetch_rates_rpc.py --blocks <file>
+SELECT
+  TIMESTAMP_TRUNC(block_timestamp, HOUR) AS hour,
+  MIN(block_number) AS block_number
+FROM `{source_dataset}.blocks`
+WHERE block_timestamp >= TIMESTAMP('{start}')
+  AND block_timestamp < TIMESTAMP('{end_excl}')
+GROUP BY hour
+ORDER BY hour;

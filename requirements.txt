@@ -1,0 +1,9 @@
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.2    # models
+scipy>=1.10          # run_escalation.py, run_contagion.py
+matplotlib>=3.7      # make_figures.py
+# optional, only for tests/test_fetchers.py
+# duckdb
+# sqlglot
+# eth-abi

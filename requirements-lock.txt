@@ -1,0 +1,9 @@
+# Exact versions that produced the results in the v1.1 data archive (Python 3.13.15).
+# The tree models (scikit-learn's HistGradientBoostingClassifier) bin features differently in scikit-learn
+# 1.8 and earlier, so their scores and the numbers built on them change (Section 8 of the paper); install these
+# to reproduce the archived numbers exactly:  pip install -r requirements-lock.txt
+pandas==3.0.5
+numpy==2.5.3
+scikit-learn==1.9.1
+scipy==1.18.1
+matplotlib==3.11.2

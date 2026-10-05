@@ -1,0 +1,45 @@
+{
+ "_doc": "Wrapper -> underlying relations (static edges). Value of the wrapper is backed by the underlying, so a depeg of the underlying passes through.",
+ "pairs": [
+  [
+   "sUSDe",
+   "USDe"
+  ],
+  [
+   "sUSDf",
+   "USDf"
+  ],
+  [
+   "sdeUSD",
+   "deUSD"
+  ],
+  [
+   "scrvUSD",
+   "crvUSD"
+  ],
+  [
+   "sDAI",
+   "DAI"
+  ],
+  [
+   "sUSDS",
+   "USDS"
+  ],
+  [
+   "bUSD0",
+   "USD0"
+  ],
+  [
+   "wstETH",
+   "stETH"
+  ],
+  [
+   "weETH",
+   "eETH"
+  ],
+  [
+   "sfrxETH",
+   "frxETH"
+  ]
+ ]
+}

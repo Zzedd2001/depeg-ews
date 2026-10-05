@@ -1,0 +1,102 @@
+-- Step 1 of the DEX price pipeline, one query per year ({start} to {end_excl}, exclusive).
+-- Reads the ERC-20 transfers of the {n_tokens} registry and quote tokens from Google's public Ethereum
+-- dataset and stores only the trades they form: one row per (transaction, asset, quote token), so the
+-- yearly tables stay far below the free sandbox's 10 GB of storage.
+-- A trade is a (transaction, counterparty) that receives exactly one tracked token and sends exactly
+-- one other. Pools match this pattern; routers that pass tokens both ways do not. Mints and burns
+-- (zero address) are dropped first, so ERC-4626 deposits, LST mints and redemptions at NAV are never
+-- counted as market trades. USD-pegged assets are matched with USDC/USDT/DAI/USDS, ETH-pegged assets
+-- with WETH. Native-ETH legs (e.g. the Curve stETH/ETH pool) are not ERC-20 transfers and are not seen.
+-- Cost: one scan of seven columns of the public token_transfers table for this year. The editor shows
+-- the estimate before you run it ("This query will process ... when run"); the free tier covers 1 TB
+-- of queries a month. Run it in a dataset in the US multi-region (the public dataset's location).
+-- Only CREATE TABLE ... AS SELECT is used, which the free sandbox allows. The table is deliberately
+-- not partitioned: the sandbox expires partitions 60 days after their date, which would empty a
+-- table of older trades at once.
+CREATE OR REPLACE TABLE `{prefix}.dex_trades_{year}` AS
+WITH tokens AS (
+  SELECT * FROM UNNEST([
+{token_structs}
+  ])
+),
+transfers AS (
+  SELECT
+    block_number,
+    transaction_index,
+    block_timestamp,
+    address AS token,
+    from_address,
+    to_address,
+    SAFE_CAST(quantity AS FLOAT64) AS amount_raw     -- decimal string -> float (15 significant digits)
+  FROM `{source_dataset}.token_transfers`
+  WHERE block_timestamp >= TIMESTAMP('{start}')
+    AND block_timestamp < TIMESTAMP('{end_excl}')
+    AND address IN (                                  -- lower-case addresses, as the public dataset stores them
+{token_list}
+    )
+    AND from_address != '0x0000000000000000000000000000000000000000'
+    AND to_address != '0x0000000000000000000000000000000000000000'
+),
+legs AS (
+  -- every transfer is a receipt for to_address and a payment for from_address
+  SELECT t.block_number, t.transaction_index, t.block_timestamp, t.token, t.amount_raw, dir,
+         IF(dir = 'in', t.to_address, t.from_address) AS party
+  FROM transfers t
+  CROSS JOIN UNNEST(['in', 'out']) AS dir
+  WHERE t.amount_raw IS NOT NULL
+),
+per_party AS (
+  SELECT
+    block_number,
+    transaction_index,
+    party,
+    MIN(block_timestamp) AS ts,
+    COUNT(DISTINCT IF(dir = 'in', token, NULL)) AS n_in,
+    COUNT(DISTINCT IF(dir = 'out', token, NULL)) AS n_out,
+    MAX(IF(dir = 'in', token, NULL)) AS token_in,
+    MAX(IF(dir = 'out', token, NULL)) AS token_out,
+    SUM(IF(dir = 'in', amount_raw, 0)) AS raw_in,
+    SUM(IF(dir = 'out', amount_raw, 0)) AS raw_out
+  FROM legs
+  GROUP BY block_number, transaction_index, party
+),
+swaps AS (
+  SELECT p.*, ti.symbol AS sym_in, ti.role AS role_in, ti.decimals AS dec_in, ti.peg AS peg_in,
+         tout.symbol AS sym_out, tout.role AS role_out, tout.decimals AS dec_out, tout.peg AS peg_out
+  FROM per_party p
+  JOIN tokens ti ON ti.address = p.token_in
+  JOIN tokens tout ON tout.address = p.token_out
+  WHERE p.n_in = 1 AND p.n_out = 1 AND p.token_in != p.token_out AND p.raw_in > 0 AND p.raw_out > 0
+),
+trades AS (
+  -- orient every swap as (asset, quote)
+  SELECT block_number, transaction_index, ts, party,
+         IF(role_in = 'asset', sym_in, sym_out) AS symbol,
+         IF(role_in = 'asset', peg_in, peg_out) AS peg,
+         IF(role_in = 'asset', sym_out, sym_in) AS quote,
+         IF(role_in = 'asset', peg_out, peg_in) AS quote_peg,
+         IF(role_in = 'asset', raw_in / POW(10, dec_in), raw_out / POW(10, dec_out)) AS asset_amount,
+         IF(role_in = 'asset', raw_out / POW(10, dec_out), raw_in / POW(10, dec_in)) AS quote_amount
+  FROM swaps
+  WHERE (role_in = 'asset' AND role_out = 'quote') OR (role_in = 'quote' AND role_out = 'asset')
+),
+matched AS (
+  SELECT * FROM trades
+  WHERE peg = quote_peg                                                    -- USD assets vs USD quotes, ETH assets vs WETH
+    AND quote_amount >= IF(quote_peg = 'USD', {floor_usd}, {floor_eth})   -- drop pure dust (step 2 sets the real minimum)
+)
+-- the pool and the trader both match the pattern with the same amounts, and split routes add one row
+-- per pool; keep one trade per (transaction, asset, quote): the largest leg, which is the trader's
+-- total when a route was split
+SELECT
+  block_number,
+  transaction_index,
+  MIN(ts) AS ts,
+  symbol,
+  peg,
+  quote,
+  MAX(asset_amount) AS asset_amount,
+  MAX(quote_amount) AS quote_amount,
+  COUNT(DISTINCT party) AS n_parties
+FROM matched
+GROUP BY block_number, transaction_index, symbol, peg, quote;

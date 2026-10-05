@@ -1,0 +1,107 @@
+[
+ {
+  "symbol": "GHO",
+  "date": "2023-08-08",
+  "expect": "onchain",
+  "note": "low 0.94; below peg for weeks",
+  "source": "https://www.dlnews.com/articles/defi/why-aave-stablecoin-gho-trades-below-its-intended-dollar-peg/"
+ },
+ {
+  "symbol": "mkUSD",
+  "date": "2024-03-28",
+  "expect": "onchain_minor",
+  "note": "low 0.98968, barely past 1%",
+  "source": "https://cryptoslate.com/prisma-finances-11-6-million-exploit-leads-to-asset-value-plummet-mkusd-stablecoin-instability/"
+ },
+ {
+  "symbol": "ezETH",
+  "date": "2024-04-24",
+  "expect": "onchain",
+  "note": "crash under 1 hour; DefiLlama hourly -13.6% vs WETH at 03:00 UTC",
+  "source": "https://www.dlnews.com/articles/defi/renzos-ezeth-loses-ether-peg-drops-79-in-under-one-hour/"
+ },
+ {
+  "symbol": "bUSD0",
+  "date": "2025-01-10",
+  "expect": "onchain",
+  "note": "USD0++ floor-price change; Curve ~0.89",
+  "source": "https://pharos.watch/learn/case-studies/usd0pp-usual-2025/"
+ },
+ {
+  "symbol": "sUSD",
+  "date": "2025-04-18",
+  "expect": "onchain",
+  "note": "0.664; below peg for ~14 months",
+  "source": "https://pharos.watch/learn/case-studies/susd-sip420-2025/"
+ },
+ {
+  "symbol": "USDf",
+  "date": "2025-07-08",
+  "expect": "onchain",
+  "note": "DEX low ~0.887",
+  "source": "https://pharos.watch/learn/case-studies/usdf-falcon-2025/"
+ },
+ {
+  "symbol": "YU",
+  "date": "2025-09-13",
+  "expect": "onchain_other_chain",
+  "note": "unauthorized mint started on Polygon",
+  "source": "https://www.theblock.co/post/370547/yalas-bitcoin-backed-stablecoin-yu-depegs-after-security-breach-leads-to-unauthorized-mint"
+ },
+ {
+  "symbol": "USDe",
+  "date": "2025-10-10",
+  "expect": "cex_only",
+  "note": "Binance ~0.65 for ~40 min; Curve <0.3%; DefiLlama hourly -2.8% at 22:00 UTC",
+  "source": "https://pharos.watch/learn/case-studies/usde-oracle-2025/"
+ },
+ {
+  "symbol": "xUSD",
+  "date": "2025-11-04",
+  "expect": "onchain",
+  "note": "~0.26",
+  "source": "https://pharos.watch/learn/case-studies/stream-elixir-contagion-2025/"
+ },
+ {
+  "symbol": "deUSD",
+  "date": "2025-11-06",
+  "expect": "onchain",
+  "note": "~0.015; contagion from xUSD",
+  "source": "https://pharos.watch/learn/case-studies/stream-elixir-contagion-2025/"
+ },
+ {
+  "symbol": "USDX",
+  "date": "2025-11-06",
+  "expect": "onchain_other_chain",
+  "note": "below 0.60 on BNB Chain",
+  "source": "https://pharos.watch/learn/case-studies/stream-elixir-contagion-2025/"
+ },
+ {
+  "symbol": "USR",
+  "date": "2026-03-22",
+  "expect": "onchain",
+  "note": "Curve ~0.025",
+  "source": "https://pharos.watch/learn/case-studies/usr-resolv-2026/"
+ },
+ {
+  "symbol": "rsETH",
+  "date": "2026-04-18",
+  "expect": "unknown",
+  "note": "bridge exploit; market low not found",
+  "source": "https://governance.aave.com/t/rseth-incident-report-april-20-2026/24580"
+ },
+ {
+  "symbol": "apxUSD",
+  "date": "2026-06-02",
+  "expect": "onchain",
+  "note": "Curve ~0.865",
+  "source": "https://pharos.watch/learn/case-studies/apxusd-dat-collateral/"
+ },
+ {
+  "symbol": "MIM",
+  "date": "2026-06-25",
+  "expect": "onchain",
+  "note": "0.49 on 25 Jun (CMC), 0.04 by 30 Sep",
+  "source": "https://cointelegraph.com/news/abracadabra-takes-emergency-measures-as-magic-internet-money-depeg-worsens"
+ }
+]

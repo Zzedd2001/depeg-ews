@@ -1,0 +1,67 @@
+{
+ "_doc": "Label rules (plan doc section 'Label definition'). Deviation d = value/reference - 1; value = USD price for USD pegs, price/ETH for ETH pegs.",
+ "threshold": {
+  "USD": 0.01,
+  "ETH": 0.02
+ },
+ "min_consecutive_hours": 2,
+ "single_hour_severe": 0.05,
+ "recovery_band_frac": 0.5,
+ "recovery_hours": 24,
+ "max_gap_fill_hours": 3,
+ "rate_ffill_hours": 72,
+ "trailing_median_hours": 168,
+ "trailing_median_min_hours": 24,
+ "min_confidence": 0.9,
+ "flat_share_flag": 0.9,
+ "horizons_hours": [
+  24,
+  72
+ ],
+ "severity_tiers": [
+  [
+   0.05,
+   "minor"
+  ],
+  [
+   0.2,
+   "major"
+  ],
+  [
+   1.0,
+   "collapse"
+  ]
+ ],
+ "sensitivity": {
+  "USD": [
+   0.005,
+   0.01,
+   0.02,
+   0.05
+  ],
+  "ETH": [
+   0.01,
+   0.02,
+   0.03,
+   0.05
+  ],
+  "min_consecutive_hours": [
+   1,
+   2,
+   4
+  ]
+ },
+ "split": {
+  "train_end": "2025-03-31T23:00Z",
+  "valid_end": "2025-09-30T23:00Z"
+ },
+ "checkpoint_min_episodes": 100,
+ "quality": {
+  "_doc": "Episodes flagged here stay in episodes.csv but give no labels; collapsed assets get no labels afterwards.",
+  "snapback_min_dev": -0.3,
+  "snapback_max_hours": 12,
+  "cluster_min_assets": 3,
+  "dead_min_dev": -0.5,
+  "dead_min_hours_below": 24
+ }
+}

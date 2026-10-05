@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this benchmark, its data or its code, please cite the paper below."
+title: "depeg-ews: an early-warning benchmark for stablecoin and liquid-staking depegs"
+version: 1.1.0
+date-released: 2026-10-04
+license: MIT
+authors:
+  - family-names: Zhu
+    given-names: Zhengdong
+keywords:
+  - decentralized finance
+  - stablecoins
+  - liquid staking
+  - depeg
+  - early warning
+  - systemic risk
+  - contagion
+preferred-citation:
+  type: article
+  title: "Onset, Escalation, and Contagion: What Warns of Stablecoin and Liquid-Staking Depegs?"
+  authors:
+    - family-names: Zhu
+      given-names: Zhengdong
+  journal: "IEEE Access"
+  year: 2026
+  status: submitted

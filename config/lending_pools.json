@@ -1,0 +1,34 @@
+{
+ "_doc": "Aave v3 instances and SparkLend on Ethereum. Addresses from bgd-labs/aave-address-book (src/AaveV3Ethereum*.sol) and sparkdotfi/spark-address-registry (src/SparkLend.sol), read 2026-10-02.",
+ "instances": [
+  {
+   "name": "aave_v3_core",
+   "pool": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+   "data_provider": "0x0a16f2FCC0D44FaE41cc54e079281D84A363bECD",
+   "oracle": "0x54586bE62E3c3580375aE3723C145253060Ca0C2",
+   "start": "2023-01-27"
+  },
+  {
+   "name": "aave_v3_lido",
+   "pool": "0x4e033931ad43597d96D6bcc25c280717730B58B1",
+   "data_provider": "0xB85B2bFEbeC4F5f401dbf92ac147A3076391fCD5",
+   "oracle": "0xE3C061981870C0C7b1f3C4F4bB36B95f1F260BE6",
+   "start": "2024-07-01"
+  },
+  {
+   "name": "aave_v3_etherfi",
+   "pool": "0x0AA97c284e98396202b6A04024F5E2c65026F3c0",
+   "data_provider": "0x7c8509591f9693D21280d96e149a08A3bf69Cd0c",
+   "oracle": "0x43b64f28A678944E0655404B0B98E443851cC34F",
+   "start": "2024-11-01"
+  },
+  {
+   "name": "sparklend",
+   "pool": "0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
+   "data_provider": "0xFc21d6d146E6086B8359705C8b28512a983db0cb",
+   "oracle": "0x8105f69D9C41644c6A0803fDA7D03Aa70996cFD9",
+   "start": "2023-05-09"
+  }
+ ],
+ "notes": "start dates are only where the reader begins asking; calls before a contract existed simply fail and are skipped."
+}

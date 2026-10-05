@@ -1,0 +1,1293 @@
+{
+ "chain": "ethereum",
+ "as_of": "2026-10-02",
+ "selectors": {
+  "getRate()": "0x679aefce",
+  "convertToAssets(uint256)": "0x07a2d13a"
+ },
+ "multicall3": "0xcA11bde05977b3631167028862bE2a173976CA11",
+ "assets": [
+  {
+   "symbol": "USDe",
+   "name": "Ethena USDe",
+   "category": "synthetic",
+   "peg": "USD",
+   "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+   "llama_key": "ethereum:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)",
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "2025-10-10 Binance-only print ~0.65; on-chain Curve deviation <0.3% per reports"
+  },
+  {
+   "symbol": "USDf",
+   "name": "Falcon USD",
+   "category": "synthetic",
+   "peg": "USD",
+   "address": "0xFa2B947eEc368f42195f24F36d2aF29f7c24CeC2",
+   "llama_key": "ethereum:0xFa2B947eEc368f42195f24F36d2aF29f7c24CeC2",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": "2025-07-08 DEX low ~0.887"
+  },
+  {
+   "symbol": "deUSD",
+   "name": "Elixir deUSD",
+   "category": "synthetic",
+   "peg": "USD",
+   "address": "0x15700b564ca08d9439c58ca5053166e8317aa138",
+   "llama_key": "coingecko:elixir-deusd",
+   "llama_first": "2024-08-01",
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)",
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "Address key returned no prices for Nov 2025 on DefiLlama; coingecko key does. Collapsed 2025-11-06 (~0.015)"
+  },
+  {
+   "symbol": "USR",
+   "name": "Resolv USD",
+   "category": "synthetic",
+   "peg": "USD",
+   "address": "0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110",
+   "llama_key": "ethereum:0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": "2026-03-22 unauthorized mint; Curve low ~0.025"
+  },
+  {
+   "symbol": "USDX",
+   "name": "Stables Labs USDX",
+   "category": "synthetic",
+   "peg": "USD",
+   "address": "0xf3527ef8de265eaa3716fb312c12847bfba66cef",
+   "llama_key": "ethereum:0xf3527ef8de265eaa3716fb312c12847bfba66cef",
+   "llama_first": "2024-09-26",
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "Same address as the BNB Chain token listed by DefiLlama (deadFrom 2025-11-14); main liquidity was on BNB Chain"
+  },
+  {
+   "symbol": "lvlUSD",
+   "name": "Level USD",
+   "category": "synthetic",
+   "peg": "USD",
+   "address": "0x7c1156e515aa1a2e851674120074968c905aaf37",
+   "llama_key": "ethereum:0x7c1156e515aa1a2e851674120074968c905aaf37",
+   "llama_first": "2024-12-28",
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)",
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "cUSD",
+   "name": "Cap cUSD",
+   "category": "synthetic",
+   "peg": "USD",
+   "address": "0xcCcc62962d17b8914c62D74FfB843d73B2a3cccC",
+   "llama_key": "ethereum:0xcCcc62962d17b8914c62D74FfB843d73B2a3cccC",
+   "llama_first": "2025-08-28",
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)",
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "iUSD",
+   "name": "infiniFi USD",
+   "category": "synthetic",
+   "peg": "USD",
+   "address": "0x48f9e38f3070ad8945dfeae3fa70987722e3d89c",
+   "llama_key": "ethereum:0x48f9e38f3070ad8945dfeae3fa70987722e3d89c",
+   "llama_first": "2025-07-16",
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)",
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "USD0",
+   "name": "Usual USD",
+   "category": "rwa_backed",
+   "peg": "USD",
+   "address": "0x73A15FeD60Bf67631dC6cd7Bc5B6e8da8190aCF5",
+   "llama_key": "ethereum:0x73A15FeD60Bf67631dC6cd7Bc5B6e8da8190aCF5",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "apxUSD",
+   "name": "Apyx apxUSD",
+   "category": "rwa_backed",
+   "peg": "USD",
+   "address": "0x98A878b1Cd98131B271883B390f68D2c90674665",
+   "llama_key": "ethereum:0x98A878b1Cd98131B271883B390f68D2c90674665",
+   "llama_first": "2026-02-25",
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)",
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "~62% reserves in Strategy preferred stock STRC; Curve low ~0.865 from 2026-06-02 | Fallback coingecko:apxusd has the collapse period that the address key lacks (checked 2026-10-02)",
+   "llama_fallback": [
+    "coingecko:apxusd"
+   ]
+  },
+  {
+   "symbol": "reUSD",
+   "name": "Re Protocol reUSD",
+   "category": "rwa_backed",
+   "peg": "USD",
+   "address": "0x5086bf358635b81d8c47c66d1c8b9e567db70c72",
+   "llama_key": "ethereum:0x5086bf358635b81d8c47c66d1c8b9e567db70c72",
+   "llama_first": "2025-06-18",
+   "reference": {
+    "kind": "trailing_median",
+    "hours": 168
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)",
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "First DefiLlama price 1.007; may accrue value, so a trailing median is used as reference"
+  },
+  {
+   "symbol": "USDtb",
+   "name": "Ethena USDtb",
+   "category": "rwa_backed",
+   "peg": "USD",
+   "address": "0xc139190f447e929f090edeb554d95abb8b18ac1c",
+   "llama_key": "ethereum:0xc139190f447e929f090edeb554d95abb8b18ac1c",
+   "llama_first": "2024-12-17",
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)",
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "sUSDe",
+   "name": "Ethena staked USDe",
+   "category": "yield_bearing",
+   "peg": "USD",
+   "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+   "llama_key": "ethereum:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+   "llama_first": "2024-03-06",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x3A244e6B3cfed21593a5E5B347B593C0B48C7dA1",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": "USDe per sUSDe"
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "sUSDf",
+   "name": "Falcon staked USDf",
+   "category": "yield_bearing",
+   "peg": "USD",
+   "address": "0xc8CF6D7991f15525488b2A83Df53468D682Ba4B0",
+   "llama_key": "ethereum:0xc8CF6D7991f15525488b2A83Df53468D682Ba4B0",
+   "llama_first": "2025-05-09",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0xa3cc6d07bedbeb3160c9fa673fd07a453b14897b",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": "USDf per sUSDf"
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "sdeUSD",
+   "name": "Elixir staked deUSD",
+   "category": "yield_bearing",
+   "peg": "USD",
+   "address": "0x5C5b196aBE0d54485975D1Ec29617D42D9198326",
+   "llama_key": "ethereum:0x5C5b196aBE0d54485975D1Ec29617D42D9198326",
+   "llama_first": "2024-08-28",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x5C5b196aBE0d54485975D1Ec29617D42D9198326",
+    "selector": "0x07a2d13a",
+    "arg": "1e18",
+    "source": "ERC-4626 convertToAssets",
+    "status": "unverified",
+    "note": "deUSD per sdeUSD; ERC-4626 not confirmed"
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "scrvUSD",
+   "name": "Savings crvUSD",
+   "category": "yield_bearing",
+   "peg": "USD",
+   "address": "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
+   "llama_key": "ethereum:0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
+   "llama_first": "2024-11-18",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
+    "selector": "0x07a2d13a",
+    "arg": "1e18",
+    "source": "ERC-4626 convertToAssets",
+    "status": "likely",
+    "note": "crvUSD per scrvUSD (Yearn V3 vault)"
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "sDAI",
+   "name": "Savings DAI",
+   "category": "yield_bearing",
+   "peg": "USD",
+   "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+   "llama_key": "ethereum:0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+   "llama_first": "2023-05-10",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0xc7177B6E18c1Abd725F5b75792e5F7A3bA5DBC2c",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": "DAI per sDAI"
+   },
+   "in_scope": false,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "Reference asset, not a prediction target"
+  },
+  {
+   "symbol": "sUSDS",
+   "name": "Savings USDS",
+   "category": "yield_bearing",
+   "peg": "USD",
+   "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+   "llama_key": "ethereum:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+   "llama_first": "2024-10-09",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x1195BE91e78ab25494C855826FF595Eef784d47B",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": "USDS per sUSDS"
+   },
+   "in_scope": false,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "Reference asset, not a prediction target"
+  },
+  {
+   "symbol": "xUSD",
+   "name": "Stream Finance staked USD",
+   "category": "yield_bearing",
+   "peg": "USD",
+   "address": "0xE2Fc85BfB48C4cF147921fBE110cf92Ef9f26F94",
+   "llama_key": "ethereum:0xE2Fc85BfB48C4cF147921fBE110cf92Ef9f26F94",
+   "llama_first": "2025-03-23",
+   "reference": {
+    "kind": "trailing_median",
+    "hours": 168
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "Value accrued above 1 (first DefiLlama price 1.169); collapsed 2025-11-04 (~0.26). Fallback key coingecko:staked-stream-usd | Fallback coingecko:staked-stream-usd has the collapse period that the address key lacks (checked 2026-10-02)",
+   "llama_fallback": [
+    "coingecko:staked-stream-usd"
+   ]
+  },
+  {
+   "symbol": "bUSD0",
+   "name": "Usual USD0++ (now bUSD0)",
+   "category": "yield_bearing",
+   "peg": "USD",
+   "address": "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0",
+   "llama_key": "ethereum:0x35D8949372D46B7a3D5A56006AE77B215fc69bC0",
+   "llama_first": null,
+   "reference": {
+    "kind": "trailing_median",
+    "hours": 168
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "Bond token; DefiLlama symbol bUSD0. 2025-01-10 floor-price change, Curve ~0.89; DefiLlama 4-hourly low 0.907 on 2025-01-10"
+  },
+  {
+   "symbol": "crvUSD",
+   "name": "Curve USD",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+   "llama_key": "ethereum:0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "GHO",
+   "name": "Aave GHO",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+   "llama_key": "ethereum:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": "Traded 0.94-0.99 from Jul 2023"
+  },
+  {
+   "symbol": "LUSD",
+   "name": "Liquity USD",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
+   "llama_key": "ethereum:0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "BOLD",
+   "name": "Liquity BOLD (v2)",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x6440f144b7e50D6a8439336510312d2F54beB01D",
+   "llama_key": "ethereum:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "DOLA",
+   "name": "Inverse DOLA",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+   "llama_key": "ethereum:0x865377367054516e17014ccded1e7d814edc9ce4",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "MIM",
+   "name": "Abracadabra MIM",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3",
+   "llama_key": "ethereum:0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": "Slide from Jun 2026 to ~0.04 by 2026-09-30"
+  },
+  {
+   "symbol": "mkUSD",
+   "name": "Prisma mkUSD",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x4591dbff62656e7859afe5e45f6f47d3669fbb28",
+   "llama_key": "ethereum:0x4591dbff62656e7859afe5e45f6f47d3669fbb28",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": "2024-03-28 exploit; low 0.98968"
+  },
+  {
+   "symbol": "ULTRA",
+   "name": "Prisma LRT ULTRA",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x35282d87011f87508D457F08252Bc5bFa52E10A0",
+   "llama_key": "ethereum:0x35282d87011f87508D457F08252Bc5bFa52E10A0",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "fxUSD",
+   "name": "f(x) fxUSD",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x085780639CC2cACd35E474e71f4d000e2405d8f6",
+   "llama_key": "ethereum:0x085780639CC2cACd35E474e71f4d000e2405d8f6",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "USDA",
+   "name": "Angle USDA",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x0000206329b97db379d5e1bf586bbdb969c63274",
+   "llama_key": "ethereum:0x0000206329b97db379d5e1bf586bbdb969c63274",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "FRAX",
+   "name": "Frax (legacy)",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x853d955acef822db058eb8505911ed77f175b99e",
+   "llama_key": "ethereum:0x853d955acef822db058eb8505911ed77f175b99e",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "frxUSD",
+   "name": "Frax USD",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+   "llama_key": "ethereum:0xcacd6fd266af91b8aed52accc382b4e165586e29",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "sUSD",
+   "name": "Synthetix sUSD",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+   "llama_key": "ethereum:0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": "Below peg from 2025-04-18 (0.664); retired 2026-06 (DefiLlama deadFrom 2026-06-23)"
+  },
+  {
+   "symbol": "YU",
+   "name": "Yala YU",
+   "category": "cdp",
+   "peg": "USD",
+   "address": "0xE868084cf08F3c3db11f4B73a95473762d9463f7",
+   "llama_key": "ethereum:0xE868084cf08F3c3db11f4B73a95473762d9463f7",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)",
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "2025-09-13 unauthorized mint"
+  },
+  {
+   "symbol": "stETH",
+   "name": "Lido stETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+   "llama_key": "ethereum:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+   "llama_first": "2020-12-22",
+   "reference": {
+    "kind": "eth_parity"
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "Rebasing, 1:1 with ETH"
+  },
+  {
+   "symbol": "wstETH",
+   "name": "Lido wstETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+   "llama_key": "ethereum:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+   "llama_first": "2021-10-07",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x72D07D7DcA67b8A406aD1Ec34ce969c90bFEE768",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": "stETH per wstETH"
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "rETH",
+   "name": "Rocket Pool rETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+   "llama_key": "ethereum:0xae78736Cd615f374D3085123A210448E74Fc6393",
+   "llama_first": "2021-11-23",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x1a8F81c256aee9C640e14bB0453ce247ea0DFE6F",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": ""
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "cbETH",
+   "name": "Coinbase cbETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+   "llama_key": "ethereum:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+   "llama_first": "2022-08-25",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x7311E4BB8a72e7B300c5B8BDE4de6CdaA822a5b1",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": ""
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "frxETH",
+   "name": "Frax frxETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
+   "llama_key": "ethereum:0x5E8422345238F34275888049021821E8E08CAa1f",
+   "llama_first": "2022-11-23",
+   "reference": {
+    "kind": "eth_parity"
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "Designed to track ETH 1:1"
+  },
+  {
+   "symbol": "sfrxETH",
+   "name": "Frax sfrxETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0xac3E018457B222d93114458476f3E3416Abbe38F",
+   "llama_key": "ethereum:0xac3E018457B222d93114458476f3E3416Abbe38F",
+   "llama_first": "2022-12-01",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x302013E7936a39c358d07A3Df55dc94EC417E3a1",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": "frxETH per sfrxETH"
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "ETHx",
+   "name": "Stader ETHx",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b",
+   "llama_key": "ethereum:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b",
+   "llama_first": "2023-07-07",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0xAAE054B9b822554dd1D9d1F48f892B4585D3bbf0",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": ""
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "osETH",
+   "name": "StakeWise osETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38",
+   "llama_key": "ethereum:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38",
+   "llama_first": "2023-12-11",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x8023518b2192FB5384DAdc596765B3dD1cdFe471",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": ""
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "mETH",
+   "name": "Mantle mETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+   "llama_key": "ethereum:0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+   "llama_first": "2023-12-08",
+   "reference": {
+    "kind": "trailing_median",
+    "hours": 168
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "No reviewed Balancer rate provider found; trailing median reference"
+  },
+  {
+   "symbol": "swETH",
+   "name": "Swell swETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0xf951E335afb289353dc249e82926178EaC7DEd78",
+   "llama_key": "ethereum:0xf951E335afb289353dc249e82926178EaC7DEd78",
+   "llama_first": "2023-05-15",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0xf951E335afb289353dc249e82926178EaC7DEd78",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": "token is its own rate provider"
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "LsETH",
+   "name": "Liquid Collective LsETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549",
+   "llama_key": "ethereum:0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549",
+   "llama_first": "2023-03-07",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0xe346245daea4b541bc2a8a6b2b1e3edb6a32c866",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": ""
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "ankrETH",
+   "name": "Ankr ankrETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb",
+   "llama_key": "ethereum:0xE95A203B1a91a908F9B9CE46459d101078c2c3cb",
+   "llama_first": "2020-12-17",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x00F8e64a8651E3479A0B20F46b1D462Fe29D6aBc",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": ""
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "tETH",
+   "name": "Treehouse tETH",
+   "category": "lst",
+   "peg": "ETH",
+   "address": "0xD11c452fc99cF405034ee446803b6F6c1F6d5ED8",
+   "llama_key": "ethereum:0xD11c452fc99cF405034ee446803b6F6c1F6d5ED8",
+   "llama_first": "2024-09-25",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x7Aee5f039da2891BF02414bc6ADA1B53c0C3902a",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": "tETH/ETH combined rate provider"
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "eETH",
+   "name": "ether.fi eETH",
+   "category": "lrt",
+   "peg": "ETH",
+   "address": "0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+   "llama_key": "ethereum:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+   "llama_first": null,
+   "reference": {
+    "kind": "eth_parity"
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "Rebasing; DefiLlama history starts 2015, i.e. priced as ETH (derived) - use DEX prices, not DefiLlama"
+  },
+  {
+   "symbol": "weETH",
+   "name": "ether.fi weETH",
+   "category": "lrt",
+   "peg": "ETH",
+   "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+   "llama_key": "ethereum:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+   "llama_first": "2023-12-04",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": "token is its own rate provider"
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "ezETH",
+   "name": "Renzo ezETH",
+   "category": "lrt",
+   "peg": "ETH",
+   "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+   "llama_key": "ethereum:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+   "llama_first": null,
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x387dBc0fB00b26fb085aa658527D5BE98302c84C",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": ""
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "2024-04-24: DefiLlama hourly 2795 vs WETH 3234 (-13.6%) at 03:00 UTC; intraday low much deeper"
+  },
+  {
+   "symbol": "rsETH",
+   "name": "Kelp rsETH",
+   "category": "lrt",
+   "peg": "ETH",
+   "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+   "llama_key": "ethereum:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+   "llama_first": "2024-01-12",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x746df66bc1Bb361b9E8E2a794C299c3427976e6C",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": ""
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "2026-04-18 bridge exploit"
+  },
+  {
+   "symbol": "pufETH",
+   "name": "Puffer pufETH",
+   "category": "lrt",
+   "peg": "ETH",
+   "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
+   "llama_key": "ethereum:0xD9A442856C234a39a81a089C06451EBAa4306a72",
+   "llama_first": "2024-02-12",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0x71f80e2CfAFA5EC2F0bF12f71FA7Ea57c3D0c7Af",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": ""
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "rswETH",
+   "name": "Swell rswETH",
+   "category": "lrt",
+   "peg": "ETH",
+   "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+   "llama_key": "ethereum:0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+   "llama_first": "2024-01-30",
+   "reference": {
+    "kind": "rate",
+    "fallback": "trailing_median"
+   },
+   "rate": {
+    "kind": "call",
+    "contract": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+    "selector": "0x679aefce",
+    "arg": null,
+    "source": "Balancer code-review rate-providers/registry.json (ethereum)",
+    "note": "token is its own rate provider"
+   },
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": ""
+  },
+  {
+   "symbol": "uniETH",
+   "name": "Bedrock uniETH",
+   "category": "lrt",
+   "peg": "ETH",
+   "address": "0xF1376bceF0f78459C0Ed0ba5ddce976F1ddF51F4",
+   "llama_key": "ethereum:0xF1376bceF0f78459C0Ed0ba5ddce976F1ddF51F4",
+   "llama_first": "2023-11-16",
+   "reference": {
+    "kind": "trailing_median",
+    "hours": 168
+   },
+   "rate": null,
+   "in_scope": true,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "No reviewed Balancer rate provider found"
+  },
+  {
+   "symbol": "USDC",
+   "name": "USD Coin",
+   "category": "control",
+   "peg": "USD",
+   "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+   "llama_key": "ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": false,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": "Quote / reference asset"
+  },
+  {
+   "symbol": "USDT",
+   "name": "Tether",
+   "category": "control",
+   "peg": "USD",
+   "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+   "llama_key": "ethereum:0xdac17f958d2ee523a2206206994597c13d831ec7",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": false,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": "Quote / reference asset"
+  },
+  {
+   "symbol": "DAI",
+   "name": "Dai",
+   "category": "control",
+   "peg": "USD",
+   "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+   "llama_key": "ethereum:0x6b175474e89094c44da98b954eedeac495271d0f",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": false,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": "Quote / reference asset"
+  },
+  {
+   "symbol": "USDS",
+   "name": "Sky Dollar",
+   "category": "control",
+   "peg": "USD",
+   "address": "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
+   "llama_key": "ethereum:0xdc035d45d973e3ec169d2276ddab16f1e407384f",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": false,
+   "verified_by": [
+    "DefiLlama peggedassets-server src/peggedData/peggedData.ts (2026-10-02)"
+   ],
+   "notes": "Quote / reference asset"
+  },
+  {
+   "symbol": "WETH",
+   "name": "Wrapped Ether",
+   "category": "control",
+   "peg": "ETH",
+   "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+   "llama_key": "ethereum:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+   "llama_first": null,
+   "reference": {
+    "kind": "fixed",
+    "value": 1.0
+   },
+   "rate": null,
+   "in_scope": false,
+   "verified_by": [
+    "DefiLlama coins API /prices/first symbol match (2026-10-02)"
+   ],
+   "notes": "ETH/USD price used to express LST/LRT prices in ETH"
+  }
+ ]
+}
