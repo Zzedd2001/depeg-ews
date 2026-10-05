@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Assemble the public release: a clean code tree for GitHub and a data archive for Zenodo.
 
-  release/depeg-ews-v<version>/             code, configs, SQL templates, tests, figures, READMEs, LICENSE, CITATION.cff
+  release/depeg-ews-v<version>/             code, configs, SQL templates, tests, figures, READMEs, LICENSE, CITATION.cff,
+                                            .zenodo.json (the metadata Zenodo gives the archive of a GitHub release)
   release/depeg-ews-data-v<version>.zip     the data files that reproduce the paper without re-fetching (data/README.md)
   release/MANIFEST.tsv, release/SHA256SUMS   every packaged file with its size and SHA-256; checksums of the two outputs
 
@@ -30,8 +31,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 VERSION = '1.1'
 
-CODE = ['README.md', 'LICENSE', 'CITATION.cff', 'requirements.txt', 'requirements-lock.txt', '.gitignore',
-        'config/*.json', 'scripts/*.py', 'sql/*.sql.tmpl', 'tests/*.py', 'tests/fixtures/**/*',
+CODE = ['README.md', 'LICENSE', 'CITATION.cff', '.zenodo.json', 'requirements.txt', 'requirements-lock.txt',
+        '.gitignore', 'config/*.json', 'scripts/*.py', 'sql/*.sql.tmpl', 'tests/*.py', 'tests/fixtures/**/*',
         'figures/*.pdf', 'figures/*.png', 'data/README.md']
 DATA = ['data/README.md', 'data/prices_llama_hourly.csv.gz', 'data/token_meta_llama.csv', 'data/rates.csv.gz',
         'data/dex_prices_hourly.csv', 'data/morpho/*', 'data/lending/*', 'data/graph/*', 'data/graph_hourly/*',

@@ -1,0 +1,32 @@
+{
+  "upload_type": "software",
+  "title": "depeg-ews: an early-warning benchmark for stablecoin and liquid-staking depegs",
+  "version": "1.1.0",
+  "creators": [
+    {
+      "name": "Zhu, Zhengdong",
+      "affiliation": "Macau University of Science and Technology",
+      "orcid": "0009-0001-8953-0061"
+    }
+  ],
+  "description": "<p>Code of depeg-ews, an hourly early-warning benchmark for depegs of synthetic, RWA-backed, yield-bearing and crypto-collateralized dollars and of liquid-staking and liquid-restaking tokens on Ethereum (52 assets, January 2023 to September 2026). It asks three questions along the life of a depeg: onset (will an episode start within 24 or 72 h?), escalation (will a new depeg reach −5%?) and contagion (which assets start an episode within a week of a severe depeg?).</p><p>The repository holds the asset registry and label rules, the fetchers for prices, exchange rates and lending markets, BigQuery SQL that reconstructs DEX trades from ERC-20 transfers, the builder of a lending-exposure graph (Morpho, Aave v3, SparkLend), the models and figures, and offline tests that include leakage tests for every task. With the data archive listed under related works, it reproduces every table and figure of the paper “Onset, Escalation, and Contagion: What Warns of Stablecoin and Liquid-Staking Depegs?” (Z. Zhu, submitted to IEEE Access, 2026).</p>",
+  "license": "mit",
+  "access_right": "open",
+  "language": "eng",
+  "keywords": [
+    "decentralized finance",
+    "stablecoins",
+    "liquid staking",
+    "depeg",
+    "early warning",
+    "systemic risk",
+    "contagion"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.23158110",
+      "relation": "isSupplementedBy",
+      "resource_type": "dataset"
+    }
+  ]
+}

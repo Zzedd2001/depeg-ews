@@ -93,6 +93,53 @@ def test_release_stops_on_an_rpc_key_and_writes_nothing():
         assert (Path(d) / 'release' / f'depeg-ews-v{mr.VERSION}' / 'scripts' / 'b.py').exists()
 
 
+def test_zenodo_metadata_matches_the_citation_file():
+    """Zenodo archives a GitHub release with the metadata in .zenodo.json (and then ignores CITATION.cff); an invalid
+    file stops the archiving. Check the keys Zenodo reads, a software record under MIT, DOIs as related works, and the
+    title, version, authors, keywords and DOIs of CITATION.cff."""
+    import json
+    import re
+    meta = json.loads((ROOT / '.zenodo.json').read_text(encoding='utf-8'))
+    top = (ROOT / 'CITATION.cff').read_text(encoding='utf-8').split('\npreferred-citation:')[0]   # not the paper's fields
+
+    def field(key):
+        m = re.search(rf'^{key}: *"?(.*?)"? *$', top, re.M)
+        return m.group(1) if m else None
+
+    def block(key):
+        m = re.search(rf'^{key}:\n((?: +.*\n)+)', top + '\n', re.M)
+        return m.group(1) if m else ''
+
+    people = []
+    for line in block('authors').splitlines():
+        m = re.match(r' *(- )?([a-z-]+): *"?(.*?)"? *$', line)
+        if m and m.group(1):
+            people.append({})
+        if m:
+            people[-1][m.group(2)] = m.group(3)
+    assert set(meta) <= {'upload_type', 'title', 'version', 'creators', 'description', 'license', 'access_right',
+                         'language', 'keywords', 'related_identifiers', 'publication_date', 'notes'}
+    assert meta['upload_type'] == field('type') == 'software' and meta['access_right'] == 'open'
+    assert meta['license'] == 'mit' and field('license') == 'MIT' and meta['title'] == field('title')
+    assert meta['version'] == field('version') and meta['version'].startswith(mr.VERSION + '.')
+    assert meta['keywords'] == re.findall(r'- (.+)', block('keywords'))
+    assert [c['name'] for c in meta['creators']] == [f"{p['family-names']}, {p['given-names']}" for p in people]
+    for c, p in zip(meta['creators'], people):
+        assert c.get('affiliation') == p.get('affiliation')
+        if 'orcid' in c or 'orcid' in p:
+            assert re.fullmatch(r'\d{4}-\d{4}-\d{4}-\d{3}[\dX]', c['orcid'])
+            assert p['orcid'] == 'https://orcid.org/' + c['orcid']
+    related = meta.get('related_identifiers', [])
+    for r in related:
+        assert re.fullmatch(r'10\.\d{4,9}/\S+', r['identifier']), r
+        assert r['relation'] in {'isSupplementedBy', 'isSupplementTo', 'isCompiledBy', 'compiles', 'isDocumentedBy',
+                                 'documents', 'references', 'isReferencedBy', 'isDerivedFrom', 'isSourceOf'}, r
+        assert r['resource_type'] in {'dataset', 'software', 'publication-article', 'publication-preprint'}, r
+    cff_dois = re.findall(r'type: doi\n +value: *"?([^"\n]+)', block('identifiers'))
+    assert {r['identifier'] for r in related} <= set(cff_dois) | {field('doi')}
+    assert 'TODO' not in json.dumps(meta) + top
+
+
 if __name__ == '__main__':
     fails = 0
     for name, fn in list(globals().items()):

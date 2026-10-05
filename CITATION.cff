@@ -1,12 +1,21 @@
 cff-version: 1.2.0
 message: "If you use this benchmark, its data or its code, please cite the paper below."
+type: software
 title: "depeg-ews: an early-warning benchmark for stablecoin and liquid-staking depegs"
+abstract: "Code of an hourly early-warning benchmark for depegs of stablecoins and liquid-staking tokens on Ethereum (52 assets, 2023-2026), with onset, escalation and contagion tasks, a lending-exposure graph, and the scripts that rebuild every number in the paper."
 version: 1.1.0
-date-released: 2026-10-04
+date-released: 2026-10-05
 license: MIT
+repository-code: "https://github.com/Zzedd2001/depeg-ews"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23158110"
+    description: "Data archive, version 1.1 (Zenodo)"
 authors:
   - family-names: Zhu
     given-names: Zhengdong
+    affiliation: "Macau University of Science and Technology"
+    orcid: "https://orcid.org/0009-0001-8953-0061"
 keywords:
   - decentralized finance
   - stablecoins

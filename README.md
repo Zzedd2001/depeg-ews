@@ -4,7 +4,7 @@ An early-warning benchmark for depegs of synthetic and yield-bearing stablecoins
 
 > **Onset, Escalation, and Contagion: What Warns of Stablecoin and Liquid-Staking Depegs?**
 > Zhengdong Zhu. Submitted to *IEEE Access*, 2026.
-> Data archive: Zenodo, DOI to be added on publication of the record.
+> Data archive: [doi:10.5281/zenodo.23158110](https://doi.org/10.5281/zenodo.23158110) (CC BY 4.0). Each code release is archived on Zenodo.
 
 Version 1.1 (October 2026). The benchmark follows 52 Ethereum assets hour by hour from January 2023 to September 2026 and asks three questions along the life of a depeg.
 
@@ -18,7 +18,7 @@ Labels come from fixed price rules, with no manual annotation and no language mo
 
 Main results on the test year (October 2025 to September 2026):
 
-- **Onset.** Logistic regression on price features reaches an average precision (AP) of 0.078 at 24 h, 7.5 times the share of positive hours (1.04%); gradient-boosted trees on the same features (AP 0.077, scores averaged over five seeds) alert ahead of 67% of the 156 test episodes while flagging 5% of asset-hours.
+- **Onset.** Logistic regression on price features reaches an average precision (AP) of 0.078 at 24 h, 7.5 times the share of positive hours (1.04%). Gradient-boosted trees on the same features (AP 0.077, scores averaged over five seeds), alerting on the top 5% of test asset-hours, are 8.5 times as precise as random alerts on as many hours (8.9% of their alerts precede an episode start within 24 h, against 1.04%) and come in about five runs a day rather than 45 scattered hours. Their alerts precede 67% of the 156 test episodes, which random alerts at the same rate would match (69%), so the gain is in precision, not coverage.
 - **Escalation.** The depth reached in the first hour more than doubles the base rate (AP 0.488 against 0.194); escalating depegs take a median of 21 h after the decision hour to hold −5%.
 - **Contagion.** A regression on the candidate's own depeg history and current stress puts a follower in the top five for 32 of the 34 test seeds that had one (AP 0.515 against 0.149 for a random order).
 - **Lending exposure** adds nothing at any stage. In the full sample, exposure levels behave as drifting asset fingerprints, and the observed follow rates make a public lending channel that doubles a linked asset's risk unlikely. Without the 59 episodes that DEX trades contradict, exposure still adds nothing.
@@ -45,7 +45,7 @@ Main results on the test year (October 2025 to September 2026):
 | `scripts/make_figures.py` | Figures 2 to 5 of the paper |
 | `scripts/paper_checks.py` | Numbers the paper quotes that the scripts above do not print: recall on repeat episodes, warning horizons, alert load, what random alerts at the same rate would catch, escalation waits, drop-one-asset inference, exposure drift, per-seed AP changes, separation of the link coefficients, a common-shock variant of the power check, synthetic channels, single-seed onset trees and a second set of five seeds |
 | `scripts/make_release.py` | Builds the public code tree and the data archive |
-| `tests/` | 73 offline tests, including leakage tests for every task and planted-effect power tests |
+| `tests/` | 74 offline tests, including leakage tests for every task and planted-effect power tests |
 | `figures/` | Figures 2 to 5 as PDF and PNG |
 | `data/README.md` | Description of every data file and its source |
 
@@ -61,7 +61,7 @@ Tested with Python 3.10 (pandas 2.3, numpy 2.2, scikit-learn 1.7, scipy 1.15, ma
 
 ## Reproduce the paper from the data archive
 
-Download `depeg-ews-data-v1.1.zip` from the Zenodo record and unzip it in the repository root with `unzip -o depeg-ews-data-v1.1.zip`; it fills `data/` with the inputs and every result file (and replaces `data/README.md` with the same text). Then rerun the models:
+Download `depeg-ews-data-v1.1.zip` from the Zenodo record ([doi:10.5281/zenodo.23158110](https://doi.org/10.5281/zenodo.23158110)) and unzip it in the repository root with `unzip -o depeg-ews-data-v1.1.zip`; it fills `data/` with the inputs and every result file (and replaces `data/README.md` with the same text). The archive's SHA-256 is `4f9057de9cd287f6c7685f4569c29621092bb44f53fc80de1b1583a11abee326`. Then rerun the models:
 
 ```bash
 python scripts/make_dataset.py                       # hourly modeling table, ~10 s, ~1.7 GB RAM
@@ -204,6 +204,10 @@ The code is released under the MIT License (`LICENSE`). The derived data in the 
 
 ## Citation
 
-See `CITATION.cff`. Until the paper is published, please cite it as:
+See `CITATION.cff`, which GitHub shows as "Cite this repository"; `.zenodo.json` holds the metadata of the Zenodo archive of each release. Until the paper is published, please cite it as:
 
 > Z. Zhu, "Onset, escalation, and contagion: What warns of stablecoin and liquid-staking depegs?" submitted to *IEEE Access*, 2026.
+
+To cite the data archive itself:
+
+> Z. Zhu, "depeg-ews data archive: Labels, features, lending-exposure graph and results," version 1.1, Zenodo, 2026, doi: 10.5281/zenodo.23158110.
