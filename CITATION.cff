@@ -1,23 +1,20 @@
 cff-version: 1.2.0
-message: "If you use this benchmark, its data or its code, please cite the paper below."
+message: "If you use this benchmark, its data or its code, please cite this archive and the data archive listed under identifiers."
 type: software
 title: "depeg-ews: an early-warning benchmark for stablecoin and liquid-staking depegs"
 abstract: "Code of an hourly early-warning benchmark for depegs of stablecoins and liquid-staking tokens on Ethereum (52 assets, 2023-2026), with onset, escalation and contagion tasks, a lending-exposure graph, and the scripts that rebuild every number in the paper."
-doi: "10.5281/zenodo.23162217"
-version: 1.1.0
-date-released: 2026-10-05
+doi: "10.5281/zenodo.23415703"
+version: 1.2.0
+date-released: 2026-10-16
 license: MIT
 repository-code: "https://github.com/Zzedd2001/depeg-ews"
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.23158110"
+    value: "10.5281/zenodo.23415703"
+    description: "Code archive, version 1.2.0 (Zenodo)"
+  - type: doi
+    value: "10.5281/zenodo.23415853"
     description: "Data archive, version 1.1 (Zenodo)"
-  - type: doi
-    value: "10.5281/zenodo.23162218"
-    description: "Code archive, version 1.1.0 (Zenodo)"
-  - type: doi
-    value: "10.5281/zenodo.23162217"
-    description: "Code archive, all versions (Zenodo)"
 authors:
   - family-names: Zhu
     given-names: Zhengdong
@@ -31,12 +28,3 @@ keywords:
   - early warning
   - systemic risk
   - contagion
-preferred-citation:
-  type: article
-  title: "Onset, Escalation, and Contagion: What Warns of Stablecoin and Liquid-Staking Depegs?"
-  authors:
-    - family-names: Zhu
-      given-names: Zhengdong
-  journal: "IEEE Access"
-  year: 2026
-  status: submitted

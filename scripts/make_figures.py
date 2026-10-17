@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Figures for the paper, drawn from the result files (no model is refitted).
 
-  fig2_dex_check         DEX check of the labelled episodes against placebo windows (Section 3)
+  fig2_dex_check         DEX check of the labeled episodes against placebo windows (Section 3)
   fig3_exposure_effect   change in AP from adding lending exposure, every task and protocol, 95 % intervals;
                          filled = main labels, hollow = without the episodes DEX trades contradict (Section 6)
   fig4_warning_horizon   (a) onset: share of test episodes with an alert at least k hours before the start
@@ -213,14 +213,14 @@ def dex_check(plt, root, out):
     c = c[c['suspect'].fillna('') == '']
     p = pd.read_csv(lab / 'source_check_placebo.csv')
     statuses = ['confirmed', 'partial', 'contradicted', 'unverified']
-    colors = [GREEN, '#9cc9a5', RED, LIGHT]
+    colors = [BLUE, '#9dbbd9', ORANGE, LIGHT]       # blue and orange, as in Figs. 3 to 5: readable with red-green color deficiency
     names = ['Confirmed', 'Partly confirmed', 'Contradicted', 'Cannot be judged']
     fig, axes = plt.subplots(1, 2, figsize=(7.0, 1.9), sharey=True, gridspec_kw={'wspace': 0.08})
     axes[0].invert_yaxis()                                   # shared y axis: invert once
     for ax, (title, filt) in zip(axes, (('(a) All windows', lambda d: d),
                                         ('(b) Windows with an hour of two or more trades', lambda d: d[d['dex_robust_hours'] > 0]))):
         sizes = []
-        for i, (name, d) in enumerate((('Labelled episodes', filt(c)), ('Placebo windows', filt(p)))):
+        for i, (name, d) in enumerate((('Labeled episodes', filt(c)), ('Placebo windows', filt(p)))):
             sizes.append(len(d))
             share = d['status'].value_counts(normalize=True).reindex(statuses, fill_value=0) * 100
             left = 0.0
@@ -228,11 +228,11 @@ def dex_check(plt, root, out):
                 ax.barh(i, share[st], left=left, color=col, height=0.6, edgecolor='white', lw=0.5)
                 if share[st] >= 6:
                     ax.text(left + share[st] / 2, i, f'{share[st]:.0f}', ha='center', va='center', fontsize=7,
-                            color='white' if st in ('confirmed', 'contradicted') else INK)
+                            color='white' if st == 'confirmed' else INK)
                 left += share[st]
         ax.set_xlim(0, 100)
         ax.set_yticks([0, 1])
-        ax.set_yticklabels(['Labelled episodes', 'Placebo windows'])
+        ax.set_yticklabels(['Labeled episodes', 'Placebo windows'])
         ax.set_title(f'{title} ({sizes[0]:,} and {sizes[1]:,})', loc='left')
         ax.set_xlabel('Share of windows (%)')
         ax.tick_params(axis='y', length=0)

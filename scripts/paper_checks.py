@@ -4,8 +4,11 @@
   python scripts/paper_checks.py repeats      # 6.1: 24-h recall on repeat episodes and on the others
   python scripts/paper_checks.py horizon      # 6.1, Fig. 4(a): episodes flagged a day / two days ahead; hours at
                                               #      which the 72-h models overtake the deviation rule
-  python scripts/paper_checks.py waits        # 6.2, 7: hours until -5% holds; deepest fifth caught and missed;
-                                              #      a depth cut set on earlier episodes
+  python scripts/paper_checks.py waits        # 6.2, 7: hours until -5% holds (escalations, and all severe episodes
+                                              #      with those already at -5% at the decision hour counted as 0);
+                                              #      deepest fifth caught and missed; a depth cut set on earlier episodes
+  python scripts/paper_checks.py closes       # 6.1: episodes that no daily close (00:00 UTC) shows at or beyond
+                                              #      the threshold
   python scripts/paper_checks.py monitor      # 7: validation-threshold alerts per day
   python scripts/paper_checks.py chance       # 6.1, 7: what random alerts at the same rate would catch (expected values)
   python scripts/paper_checks.py drift        # 6.4: how far exposure levels move between training and test
@@ -170,6 +173,27 @@ def monitor(args):
           f'{len(al) / days:.1f} a day; {runs} new runs of alerts = {runs / days:.1f} a day; {per_day:.1f} assets a day')
 
 
+def closes(args):
+    """Episodes that a monitor reading one price a day (the 00:00 UTC deviation) never sees at or beyond -theta."""
+    from common import load_registry
+    rules = json.loads((args.root / 'config' / 'label_rules.json').read_text())
+    _, assets = load_registry(args.root / 'config' / 'assets.json')
+    peg = {a['symbol']: a['peg'] for a in assets}
+    lab = pd.read_csv(args.root / 'data' / 'labels' / 'labels_hourly.csv.gz', usecols=['hour', 'symbol', 'dev'])
+    lab['ts'] = epoch_seconds(lab['hour'])
+    close = lab[lab['ts'] % 86400 == 0].set_index(['symbol', 'ts'])['dev']
+    ep = episodes(args.root)
+    seen = []
+    for s, t0, t1 in zip(ep['symbol'], ep['ts'], ep['te']):
+        days = np.arange(-(-t0 // 86400) * 86400, t1 + 1, 86400)
+        v = close.reindex(pd.MultiIndex.from_arrays([[s] * len(days), days])).to_numpy()
+        seen.append(bool(np.any(v <= -rules['threshold'][peg[s]])))
+    seen = np.array(seen)
+    sev = ep['severity'].isin(['major', 'collapse']).to_numpy()
+    print(f'{len(ep)} episodes; {int((~seen).sum())} ({(~seen).mean():.1%}) never have a daily close at or beyond the '
+          f'threshold (minor {(~seen[~sev]).mean():.1%}, severe {(~seen[sev]).mean():.1%})')
+
+
 # ---------------------------------------------------------------- escalation
 def waits(args):
     et = pd.read_csv(args.root / 'data' / 'model' / 'escalation.csv.gz')
@@ -196,6 +220,16 @@ def waits(args):
     w['caught'] = [(s, t) in ids for s, t in zip(w['symbol'], w['t0'])]
     tw = w[w['split'] == 'test']
     c, m = tw[tw['caught']], tw[~tw['caught']]
+    sev = et[(et['landmark'] == 1) & et['severity'].isin(['major', 'collapse'])]
+    ws = []
+    for s, t0, tau in zip(sev['symbol'], sev['t0'], sev['ts']):
+        x = obs[s].loc[t0:].dropna()
+        v, ix = x.to_numpy(), x.index.to_numpy()
+        hit = next((ix[i] for i in range(1, len(v)) if max(v[i - 1], v[i]) <= -0.05), None)
+        ws.append(max((hit - tau) / H, 0.0) if hit is not None else np.nan)
+    ws = pd.Series(ws)
+    print(f"all {len(ws)} severe episodes, those already at -5 % at the decision hour counted as 0 h: median "
+          f"{ws.median():.1f} h, {(ws <= 6).mean():.1%} within 6 h, {(ws <= 24).mean():.1%} within 24 h")
     print(f"all {len(w)} escalations: median {w['wait'].median():.1f} h after the decision hour, "
           f"{(w['wait'] <= 6).mean():.1%} within 6 h, {(w['wait'] <= 24).mean():.1%} within 24 h; test period: median "
           f"{tw['wait'].median():.1f} h; caught {len(c)}: median {c['wait'].median():.1f} h ({int((c['wait'] <= 6).sum())} "
@@ -413,8 +447,8 @@ def synthetic(args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('what', choices=['repeats', 'horizon', 'monitor', 'waits', 'drop', 'drift', 'seeds', 'separation',
-                                     'shock', 'synthetic', 'treeseeds', 'seedset', 'chance'])
+    ap.add_argument('what', choices=['repeats', 'horizon', 'monitor', 'waits', 'closes', 'drop', 'drift', 'seeds',
+                                     'separation', 'shock', 'synthetic', 'treeseeds', 'seedset', 'chance'])
     ap.add_argument('--root', type=Path, default=ROOT)
     ap.add_argument('--data', default=str(ROOT / 'data' / 'model' / 'escalation.csv.gz'))
     ap.add_argument('--outcome', default='long')

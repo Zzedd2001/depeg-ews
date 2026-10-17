@@ -2,11 +2,10 @@
 
 An early-warning benchmark for depegs of synthetic and yield-bearing stablecoins and liquid-staking tokens on Ethereum, with the code that rebuilds every number in the paper.
 
-> **Onset, Escalation, and Contagion: What Warns of Stablecoin and Liquid-Staking Depegs?**
-> Zhengdong Zhu. Submitted to *IEEE Access*, 2026.
-> Data archive: [doi:10.5281/zenodo.23158110](https://doi.org/10.5281/zenodo.23158110) (CC BY 4.0). Code archive, all versions: [doi:10.5281/zenodo.23162217](https://doi.org/10.5281/zenodo.23162217) (MIT).
+> Code and data for a paper by Zhengdong Zhu (manuscript under review, 2026).
+> Data archive: [doi:10.5281/zenodo.23415853](https://doi.org/10.5281/zenodo.23415853) (CC BY 4.0). Code archive: [doi:10.5281/zenodo.23415703](https://doi.org/10.5281/zenodo.23415703) (MIT).
 
-Version 1.1 (October 2026). The benchmark follows 52 Ethereum assets hour by hour from January 2023 to September 2026 and asks three questions along the life of a depeg.
+Version 1.2 (October 2026). The benchmark follows 52 Ethereum assets hour by hour from January 2023 to September 2026 and asks three questions along the life of a depeg.
 
 | Task | Decision at | Positive when | Size |
 | --- | --- | --- | --- |
@@ -19,9 +18,11 @@ Labels come from fixed price rules, with no manual annotation and no language mo
 Main results on the test year (October 2025 to September 2026):
 
 - **Onset.** Logistic regression on price features reaches an average precision (AP) of 0.078 at 24 h, 7.5 times the share of positive hours (1.04%). Gradient-boosted trees on the same features (AP 0.077, scores averaged over five seeds), alerting on the top 5% of test asset-hours, are 8.5 times as precise as random alerts on as many hours (8.9% of their alerts precede an episode start within 24 h, against 1.04%) and come in about five runs a day rather than 45 scattered hours. Their alerts precede 67% of the 156 test episodes, which random alerts at the same rate would match (69%), so the gain is in precision, not coverage.
-- **Escalation.** The depth reached in the first hour more than doubles the base rate (AP 0.488 against 0.194); escalating depegs take a median of 21 h after the decision hour to hold −5%.
-- **Contagion.** A regression on the candidate's own depeg history and current stress puts a follower in the top five for 32 of the 34 test seeds that had one (AP 0.515 against 0.149 for a random order).
-- **Lending exposure** adds nothing at any stage. In the full sample, exposure levels behave as drifting asset fingerprints, and the observed follow rates make a public lending channel that doubles a linked asset's risk unlikely. Without the 59 episodes that DEX trades contradict, exposure still adds nothing.
+- **Hourly against daily data.** At the daily decision points (00:00 UTC), the hourly regression's AP (0.090) is 2.3 times that of a daily tail-risk model (an AR(1) of the daily close with EWMA variance and a generalized Pareto tail, AP 0.039) and above that of a regression on daily closes (0.054). Given the episode counts of the hourly features, daily models come within noise of the hourly ones: 234 of the 444 episodes never show in a daily close at or beyond the threshold.
+- **Escalation.** The depth reached in the first hour more than doubles the base rate (AP 0.488 against 0.194). Depegs that escalate after the decision hour take a median of 21 h to hold −5% (9.5 h over all 86 severe depegs, counting the 25 already at −5% at the decision hour as 0 h).
+- **Contagion.** A regression on the candidate's own depeg history and current stress puts a follower in the top five for 32 of the 34 test seeds that had one (AP 0.515 against 0.149 for a random order). Within a week of a severe depeg, 5.1% of seed-candidate pairs follow: no more than at placebo hours 14 to 28 days away that lie near another severe depeg (5.6%; ratio 0.91, 95% interval 0.61 to 1.32), though more than at calm placebo hours (3.9%; 1.32, 0.97 to 1.68).
+- **Lending exposure** adds no robust predictive value at any stage. In the full sample, exposure levels behave as drifting asset fingerprints, and the observed follow rates make a public lending channel that doubles a linked asset's risk unlikely. Without the 59 episodes that DEX trades contradict, and on the 127 episodes that trades confirm or partly confirm, exposure still adds nothing.
+- **What is at stake.** 59 of the 156 test depegs hit assets with at least $10,000 of collateral posted on Morpho, Aave or Spark (median $2.8 million). Weighted by this collateral, the alerts of the trees and the regression precede 36% and 45% of it (49% for both without the contradicted episodes), against 71% for random alerts at the same rate: the models spend about half of their alerts on the quarter of asset-hours without lending exposure, where depegs are most frequent.
 
 ## Repository layout
 
@@ -42,10 +43,14 @@ Main results on the test year (October 2025 to September 2026):
 | `scripts/make_escalation.py`, `scripts/run_escalation.py` | Escalation: episode table at 1 and 6 h (24 h with `--landmarks 1 6 24`), 7 models, leave-one-asset-out, clustered regressions with a pairs cluster bootstrap-t |
 | `scripts/make_contagion.py`, `scripts/run_contagion.py` | Contagion: seed–candidate pairs, 10 rankers, leave-one-cluster-out, link follow rates |
 | `scripts/power_contagion.py` | Semi-synthetic power of the contagion link tests on the real pairs |
+| `scripts/contagion_baseline.py` | Follow rates after severe depegs against placebo hours 14, 21 and 28 days earlier or later, with a seed-cluster bootstrap |
+| `scripts/daily_baseline.py` | Daily models (one close per asset and day at 00:00 UTC, including an AR(1)-EWMA-GPD tail-risk model) against the hourly models at the same decision points |
+| `scripts/economic_magnitude.py` | Collateral at stake at test-period depegs, collateral-weighted recall, alert runs, and the collateral on escalating depegs |
+| `scripts/trade_supported.py` | Exclusion list for the robustness run on the 127 trade-supported episodes |
 | `scripts/make_figures.py` | Figures 2 to 5 of the paper |
 | `scripts/paper_checks.py` | Numbers the paper quotes that the scripts above do not print: recall on repeat episodes, warning horizons, alert load, what random alerts at the same rate would catch, escalation waits, drop-one-asset inference, exposure drift, per-seed AP changes, separation of the link coefficients, a common-shock variant of the power check, synthetic channels, single-seed onset trees and a second set of five seeds |
 | `scripts/make_release.py` | Builds the public code tree and the data archive |
-| `tests/` | 74 offline tests, including leakage tests for every task and planted-effect power tests |
+| `tests/` | 78 offline tests, including leakage tests for every task and for the daily features, and planted-effect power tests |
 | `figures/` | Figures 2 to 5 as PDF and PNG |
 | `data/README.md` | Description of every data file and its source |
 
@@ -61,7 +66,7 @@ Tested with Python 3.10 (pandas 2.3, numpy 2.2, scikit-learn 1.7, scipy 1.15, ma
 
 ## Reproduce the paper from the data archive
 
-Download `depeg-ews-data-v1.1.zip` from the Zenodo record ([doi:10.5281/zenodo.23158110](https://doi.org/10.5281/zenodo.23158110)) and unzip it in the repository root with `unzip -o depeg-ews-data-v1.1.zip`; it fills `data/` with the inputs and every result file (and replaces `data/README.md` with the same text). The archive's SHA-256 is `4f9057de9cd287f6c7685f4569c29621092bb44f53fc80de1b1583a11abee326`. Then rerun the models:
+Download `depeg-ews-data-v1.1.zip` from the Zenodo record ([doi:10.5281/zenodo.23415853](https://doi.org/10.5281/zenodo.23415853)) and unzip it in the repository root with `unzip -o depeg-ews-data-v1.1.zip`; it fills `data/` with the inputs and every result file (and replaces `data/README.md` with the same text). The archive's SHA-256 is `4f9057de9cd287f6c7685f4569c29621092bb44f53fc80de1b1583a11abee326`. Then rerun the models:
 
 ```bash
 python scripts/make_dataset.py                       # hourly modeling table, ~10 s, ~1.7 GB RAM
@@ -76,7 +81,12 @@ python scripts/run_contagion.py --seeds all          # both protocols, ~5 min   
 python scripts/power_contagion.py --rr 1 2 3 4 6 8 16 --reps 1000   # ~2 min per relative risk -> data/model/contagion_power.md
 python scripts/make_figures.py                       # figures/fig2..fig5 (.pdf and .png)
 python scripts/paper_checks.py horizon               # and the other subcommands, see the script's header
+python scripts/daily_baseline.py                     # daily against hourly models, ~30-60 min -> data/model/daily_baseline.md
+python scripts/contagion_baseline.py                 # follow rates against placebo hours, ~1 min -> data/model/contagion_baseline.md
+python scripts/economic_magnitude.py                 # collateral at stake and alert coverage   -> data/model/economic_magnitude.md
 ```
+
+The last three scripts are new in version 1.2. Their outputs are not in the v1.1 data archive; they are rebuilt from it, as are the robustness runs below.
 
 Onset prediction files (`preds_*.csv.gz`) store scores at full precision. `make_figures.py` and `paper_checks.py` read them with `float_precision='round_trip'`, which returns exactly the scores the models wrote; pandas' default parser can be off in the last bit.
 
@@ -84,11 +94,13 @@ Onset prediction files (`preds_*.csv.gz`) store scores at full precision. `make_
 | --- | --- |
 | Table 2, Table A1 | `data/labels/episodes.csv`, `data/labels/checkpoint_report.md`, `data/labels/known_events_check.csv`, `data/labels/source_check.md` |
 | Table 4, Section 6.1 | `data/model/results.md`, `data/model/compare_preds.md`; `paper_checks.py repeats`, `horizon`, `chance` |
-| Table 5, Section 6.2 | `data/model/escalation_results.md`; `paper_checks.py waits` |
-| Table 6, Section 6.3 | `data/model/contagion_severe_results.md`, `data/model/contagion_all_results.md`; `paper_checks.py seeds` |
+| Table 5, Section 6.1 (hourly against daily data) | `data/model/daily_baseline.md`; `paper_checks.py closes` |
+| Table 6, Section 6.2 | `data/model/escalation_results.md`; `paper_checks.py waits` |
+| Table 7, Section 6.3 | `data/model/contagion_severe_results.md`, `data/model/contagion_all_results.md`, `data/model/contagion_baseline.md`; `paper_checks.py seeds` |
 | Section 5, contagion candidates | `make_contagion.py --candidates known --out data/model_known/contagion_severe.csv.gz`, then `run_contagion.py --data data/model_known/contagion_severe.csv.gz --out data/model_known` (~25 min) |
 | Section 6.4 | `data/model/results.md`, `compare_preds.md`, `escalation_results.md`, `contagion_severe_results.md`, `contagion_power.md`; `paper_checks.py drift`, `drop`, `shock`, `synthetic` |
-| Section 6.5 | the same files under `data/model_robust/`; `paper_checks.py separation`, and `drop` with `--data data/model_robust/escalation.csv.gz` and the flags in the script's header |
+| Table 8, Section 6.5 | `data/model/economic_magnitude.md`; without contradicted and on trade-supported episodes, the same file under `data/model_robust/` and `data/model_traded/` |
+| Section 6.6 | the same files under `data/model_robust/` and `data/model_traded/` (including `contagion_baseline.md`); `paper_checks.py separation`, and `drop` with `--data data/model_robust/escalation.csv.gz` and the flags in the script's header |
 | Section 7 | `paper_checks.py monitor`, `chance`, `waits` |
 | Sections 5 and 8, single-seed trees and a second seed set | `paper_checks.py treeseeds`, `paper_checks.py seedset` (~20 min); the scikit-learn 1.7 numbers come from rerunning `run_baselines.py`, `compare_preds.py` and `run_escalation.py` after `pip install scikit-learn==1.7.2` |
 | Fig. 2 | `data/labels/source_check.csv`, `data/labels/source_check_placebo.csv` |
@@ -132,6 +144,10 @@ python scripts/compare_sources.py --rates data/rates.csv.gz              # -> da
 python scripts/make_labels.py --prices data/prices_llama_hourly.csv.gz data/dex_prices_hourly.csv \
     --primary defillama --rates data/rates.csv.gz \
     --exclude-episodes data/labels/exclude_contradicted.csv --out-dir data/labels_robust
+python scripts/trade_supported.py                                       # -> data/labels/exclude_not_trade_supported.csv
+python scripts/make_labels.py --prices data/prices_llama_hourly.csv.gz data/dex_prices_hourly.csv \
+    --primary defillama --rates data/rates.csv.gz \
+    --exclude-episodes data/labels/exclude_not_trade_supported.csv --out-dir data/labels_traded
 ```
 
 **5. Lending-exposure graph:**
@@ -159,6 +175,22 @@ python scripts/make_contagion.py --labels data/labels_robust/labels_hourly.csv.g
 python scripts/run_contagion.py --data data/model_robust/contagion_severe.csv.gz --out data/model_robust
 python scripts/make_contagion.py --labels data/labels_robust/labels_hourly.csv.gz --episodes data/labels_robust/episodes.csv --seeds all --out data/model_robust/contagion_all.csv.gz
 python scripts/run_contagion.py --seeds all --data data/model_robust/contagion_all.csv.gz --out data/model_robust --protocols time
+python scripts/contagion_baseline.py --labels data/labels_robust/labels_hourly.csv.gz --episodes data/labels_robust/episodes.csv --out data/model_robust/contagion_baseline.json
+python scripts/economic_magnitude.py --model-dir data/model_robust --episodes data/labels_robust/episodes.csv
+```
+
+The run on the 127 trade-supported episodes uses `data/labels_traded/` and `data/model_traded/` in the same way (onset with `--models base_rate rule_dev logit_P hgb_P hgb_PE` at 72 h is enough for the paper):
+
+```bash
+python scripts/make_dataset.py --labels data/labels_traded/labels_hourly.csv.gz --episodes data/labels_traded/episodes.csv --out data/model_traded/dataset.pkl.gz
+python scripts/run_baselines.py --data data/model_traded/dataset.pkl.gz --episodes data/labels_traded/episodes.csv --out data/model_traded --models base_rate rule_dev logit_P hgb_P hgb_PE
+python scripts/compare_preds.py --dir data/model_traded --pairs hgb_PE:hgb_P logit_P:hgb_P hgb_P:rule_dev
+python scripts/make_escalation.py --labels data/labels_traded/labels_hourly.csv.gz --episodes data/labels_traded/episodes.csv --out data/model_traded/escalation.csv.gz --landmarks 1 6 24
+python scripts/run_escalation.py --data data/model_traded/escalation.csv.gz --out data/model_traded
+python scripts/make_contagion.py --labels data/labels_traded/labels_hourly.csv.gz --episodes data/labels_traded/episodes.csv --out data/model_traded/contagion_severe.csv.gz
+python scripts/run_contagion.py --data data/model_traded/contagion_severe.csv.gz --out data/model_traded
+python scripts/contagion_baseline.py --labels data/labels_traded/labels_hourly.csv.gz --episodes data/labels_traded/episodes.csv --out data/model_traded/contagion_baseline.json
+python scripts/economic_magnitude.py --model-dir data/model_traded --episodes data/labels_traded/episodes.csv
 ```
 
 ## Design choices that matter
@@ -187,7 +219,16 @@ python tests/test_models.py
 python tests/test_escalation.py           # ~1-2 min
 python tests/test_contagion.py            # ~1-3 min
 python tests/test_release.py
+python tests/test_daily.py               # needs scipy
 ```
+
+## Changes in version 1.2
+
+- New analyses for the revised paper, all rebuilt from the v1.1 data archive with no new inputs: daily models against the hourly ones at the same decision points (`daily_baseline.py`), follow rates after severe depegs against placebo hours (`contagion_baseline.py`), the collateral at stake and how much of it the alerts precede (`economic_magnitude.py`), and a robustness run on the 127 trade-supported episodes (`trade_supported.py`).
+- `paper_checks.py closes` counts the episodes that no daily close shows at or beyond the threshold; `paper_checks.py waits` also reports the wait over all severe episodes.
+- `tests/test_daily.py` adds leakage tests for the daily features and the tail-risk scores.
+- Fig. 2 spells its axis label in American English ("Labeled episodes", as in the paper) and uses the blue and orange of Figs. 3 to 5, which readers with red-green color deficiency can tell apart. Its numbers are unchanged.
+- Until the paper is published, the citation metadata cite the data and code archives rather than the paper.
 
 ## Changes from version 1.0
 
@@ -204,12 +245,8 @@ The code is released under the MIT License (`LICENSE`). The derived data in the 
 
 ## Citation
 
-See `CITATION.cff`, which GitHub shows as "Cite this repository"; `.zenodo.json` holds the metadata of the Zenodo archive of each release. Until the paper is published, please cite it as:
+See `CITATION.cff`, which GitHub shows as "Cite this repository"; `.zenodo.json` holds the same metadata in Zenodo's format. Until the paper is published, please cite the data and code archives:
 
-> Z. Zhu, "Onset, escalation, and contagion: What warns of stablecoin and liquid-staking depegs?" submitted to *IEEE Access*, 2026.
-
-To cite the data or the code themselves:
-
-> Z. Zhu, "depeg-ews data archive: Labels, features, lending-exposure graph and results," version 1.1, Zenodo, 2026, doi: 10.5281/zenodo.23158110.
+> Z. Zhu, "depeg-ews data archive: Labels, features, lending-exposure graph and results," version 1.1, Zenodo, 2026, doi: 10.5281/zenodo.23415853.
 >
-> Z. Zhu, "depeg-ews: An early-warning benchmark for stablecoin and liquid-staking depegs," version 1.1.0, Zenodo, 2026, doi: 10.5281/zenodo.23162218.
+> Z. Zhu, "depeg-ews: An early-warning benchmark for stablecoin and liquid-staking depegs," version 1.2.0, Zenodo, 2026, doi: 10.5281/zenodo.23415703.

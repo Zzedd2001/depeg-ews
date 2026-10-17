@@ -29,7 +29,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = '1.1'
+VERSION = '1.2'
 
 CODE = ['README.md', 'LICENSE', 'CITATION.cff', '.zenodo.json', 'requirements.txt', 'requirements-lock.txt',
         '.gitignore', 'config/*.json', 'scripts/*.py', 'sql/*.sql.tmpl', 'tests/*.py', 'tests/fixtures/**/*',
