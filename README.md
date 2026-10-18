@@ -21,7 +21,7 @@ Main results on the test year (October 2025 to September 2026):
 - **Hourly against daily data.** At the daily decision points (00:00 UTC), the hourly regression's AP (0.090) is 2.3 times that of a daily tail-risk model (an AR(1) of the daily close with EWMA variance and a generalized Pareto tail, AP 0.039) and above that of a regression on daily closes (0.054). Given the episode counts of the hourly features, daily models come within noise of the hourly ones: 234 of the 444 episodes never show in a daily close at or beyond the threshold.
 - **Escalation.** The depth reached in the first hour more than doubles the base rate (AP 0.488 against 0.194). Depegs that escalate after the decision hour take a median of 21 h to hold −5% (9.5 h over all 86 severe depegs, counting the 25 already at −5% at the decision hour as 0 h).
 - **Contagion.** A regression on the candidate's own depeg history and current stress puts a follower in the top five for 32 of the 34 test seeds that had one (AP 0.515 against 0.149 for a random order). Within a week of a severe depeg, 5.1% of seed-candidate pairs follow: no more than at placebo hours 14 to 28 days away that lie near another severe depeg (5.6%; ratio 0.91, 95% interval 0.61 to 1.32), though more than at calm placebo hours (3.9%; 1.32, 0.97 to 1.68).
-- **Lending exposure** adds no robust predictive value at any stage. In the full sample, exposure levels behave as drifting asset fingerprints, and the observed follow rates make a public lending channel that doubles a linked asset's risk unlikely. Without the 59 episodes that DEX trades contradict, and on the 127 episodes that trades confirm or partly confirm, exposure still adds nothing.
+- **Lending exposure** adds no robust predictive value at any stage. In the full sample, exposure levels behave as drifting asset fingerprints, and the observed follow rates make a public lending channel that doubles a linked asset's risk unlikely. Without the 59 episodes that DEX trades contradict, and on the 127 episodes that trades confirm or partly confirm, exposure still adds no robust predictive value.
 - **What is at stake.** 59 of the 156 test depegs hit assets with at least $10,000 of collateral posted on Morpho, Aave or Spark (median $2.8 million). Weighted by this collateral, the alerts of the trees and the regression precede 36% and 45% of it (49% for both without the contradicted episodes), against 71% for random alerts at the same rate: the models spend about half of their alerts on the quarter of asset-hours without lending exposure, where depegs are most frequent.
 
 ## Repository layout
@@ -62,7 +62,7 @@ Python 3.10 or later.
 pip install -r requirements.txt
 ```
 
-Tested with Python 3.10 (pandas 2.3, numpy 2.2, scikit-learn 1.7, scipy 1.15, matplotlib 3.10) and Python 3.13 (pandas 3.0, numpy 2.5, scikit-learn 1.9, scipy 1.18). The results in the data archive were computed with the second set, which `requirements-lock.txt` pins (`pip install -r requirements-lock.txt`). With scikit-learn 1.7 or 1.8 in place of 1.9 (the other packages as pinned), regressions and rules give identical results, but those versions place the trees' histogram bins differently: the five-seed onset trees on price features, with and without exposure, then move by less than 0.006 in AP, and the escalation trees gain 0.051 from exposure on the time split instead of 0.024 (Section 8 of the paper).
+Tested with Python 3.10 (pandas 2.3, numpy 2.2, scikit-learn 1.7, scipy 1.15, matplotlib 3.10) and Python 3.13 (pandas 3.0, numpy 2.5, scikit-learn 1.9, scipy 1.18). The results in the data archive were computed with the second set, which `requirements-lock.txt` pins (`pip install -r requirements-lock.txt`). With scikit-learn 1.7 or 1.8 in place of 1.9 (the other packages as pinned), regressions and rules give identical results, but those versions place the trees' histogram bins differently: the five-seed onset trees on price features, with and without exposure, then move by less than 0.006 in AP, and the escalation trees gain 0.051 from exposure on the time split instead of 0.024 (Section 6.6 of the paper).
 
 ## Reproduce the paper from the data archive
 
@@ -90,6 +90,8 @@ The last three scripts are new in version 1.2. Their outputs are not in the v1.1
 
 Onset prediction files (`preds_*.csv.gz`) store scores at full precision. `make_figures.py` and `paper_checks.py` read them with `float_precision='round_trip'`, which returns exactly the scores the models wrote; pandas' default parser can be off in the last bit.
 
+The table follows the sections of the current manuscript. A few commands also print checks from a longer earlier draft that the manuscript no longer reports: `paper_checks.py repeats`, `seeds` and `seedset`, the `--candidates known` contagion run, and `drop` on the sample without contradicted episodes.
+
 | Paper element | Source file |
 | --- | --- |
 | Table 2, Table A1 | `data/labels/episodes.csv`, `data/labels/checkpoint_report.md`, `data/labels/known_events_check.csv`, `data/labels/source_check.md` |
@@ -97,12 +99,12 @@ Onset prediction files (`preds_*.csv.gz`) store scores at full precision. `make_
 | Table 5, Section 6.1 (hourly against daily data) | `data/model/daily_baseline.md`; `paper_checks.py closes` |
 | Table 6, Section 6.2 | `data/model/escalation_results.md`; `paper_checks.py waits` |
 | Table 7, Section 6.3 | `data/model/contagion_severe_results.md`, `data/model/contagion_all_results.md`, `data/model/contagion_baseline.md`; `paper_checks.py seeds` |
-| Section 5, contagion candidates | `make_contagion.py --candidates known --out data/model_known/contagion_severe.csv.gz`, then `run_contagion.py --data data/model_known/contagion_severe.csv.gz --out data/model_known` (~25 min) |
-| Section 6.4 | `data/model/results.md`, `compare_preds.md`, `escalation_results.md`, `contagion_severe_results.md`, `contagion_power.md`; `paper_checks.py drift`, `drop`, `shock`, `synthetic` |
+| Contagion candidates known at the decision hour (not reported in the paper) | `make_contagion.py --candidates known --out data/model_known/contagion_severe.csv.gz`, then `run_contagion.py --data data/model_known/contagion_severe.csv.gz --out data/model_known` (~25 min) |
+| Sections 6.2 and 6.4 | `data/model/results.md`, `compare_preds.md`, `escalation_results.md`, `contagion_severe_results.md`, `contagion_power.md`; `paper_checks.py drift`, `drop`, `shock`, `synthetic` |
 | Table 8, Section 6.5 | `data/model/economic_magnitude.md`; without contradicted and on trade-supported episodes, the same file under `data/model_robust/` and `data/model_traded/` |
 | Section 6.6 | the same files under `data/model_robust/` and `data/model_traded/` (including `contagion_baseline.md`); `paper_checks.py separation`, and `drop` with `--data data/model_robust/escalation.csv.gz` and the flags in the script's header |
 | Section 7 | `paper_checks.py monitor`, `chance`, `waits` |
-| Sections 5 and 8, single-seed trees and a second seed set | `paper_checks.py treeseeds`, `paper_checks.py seedset` (~20 min); the scikit-learn 1.7 numbers come from rerunning `run_baselines.py`, `compare_preds.py` and `run_escalation.py` after `pip install scikit-learn==1.7.2` |
+| Section 5.1, single-seed trees; Section 6.6, scikit-learn 1.7; a second seed set (not reported in the paper) | `paper_checks.py treeseeds`, `paper_checks.py seedset` (~20 min); the scikit-learn 1.7 numbers come from rerunning `run_baselines.py`, `compare_preds.py` and `run_escalation.py` after `pip install scikit-learn==1.7.2` |
 | Fig. 2 | `data/labels/source_check.csv`, `data/labels/source_check_placebo.csv` |
 | Fig. 3 | `compare_preds.json`, `escalation_results.json`, `contagion_*_results.json` in `data/model/` and `data/model_robust/` |
 | Fig. 4 | `data/model/preds_*_72h.csv.gz`, `data/model/escalation.csv.gz`, `data/labels/labels_hourly.csv.gz`, `data/labels/episodes.csv` |
