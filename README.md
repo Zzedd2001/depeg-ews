@@ -47,11 +47,11 @@ Main results on the test year (October 2025 to September 2026):
 | `scripts/daily_baseline.py` | Daily models (one close per asset and day at 00:00 UTC, including an AR(1)-EWMA-GPD tail-risk model) against the hourly models at the same decision points |
 | `scripts/economic_magnitude.py` | Collateral at stake at test-period depegs, collateral-weighted recall, alert runs, and the collateral on escalating depegs |
 | `scripts/trade_supported.py` | Exclusion list for the robustness run on the 127 trade-supported episodes |
-| `scripts/make_figures.py` | Figures 2 to 5 of the paper |
+| `scripts/make_figures.py` | Figs. 2 to 4 and Supplementary Fig. S1 of the paper (the file names follow an earlier numbering; see the table below) |
 | `scripts/paper_checks.py` | Numbers the paper quotes that the scripts above do not print: recall on repeat episodes, warning horizons, alert load, what random alerts at the same rate would catch, escalation waits, drop-one-asset inference, exposure drift, per-seed AP changes, separation of the link coefficients, a common-shock variant of the power check, synthetic channels, single-seed onset trees and a second set of five seeds |
 | `scripts/make_release.py` | Builds the public code tree and the data archive |
 | `tests/` | 78 offline tests, including leakage tests for every task and for the daily features, and planted-effect power tests |
-| `figures/` | Figures 2 to 5 as PDF and PNG |
+| `figures/` | Figs. 2 to 4 and Supplementary Fig. S1 as PDF and PNG |
 | `data/README.md` | Description of every data file and its source |
 
 ## Installation
@@ -62,7 +62,7 @@ Python 3.10 or later.
 pip install -r requirements.txt
 ```
 
-Tested with Python 3.10 (pandas 2.3, numpy 2.2, scikit-learn 1.7, scipy 1.15, matplotlib 3.10) and Python 3.13 (pandas 3.0, numpy 2.5, scikit-learn 1.9, scipy 1.18). The results in the data archive were computed with the second set, which `requirements-lock.txt` pins (`pip install -r requirements-lock.txt`). With scikit-learn 1.7 or 1.8 in place of 1.9 (the other packages as pinned), regressions and rules give identical results, but those versions place the trees' histogram bins differently: the five-seed onset trees on price features, with and without exposure, then move by less than 0.006 in AP, and the escalation trees gain 0.051 from exposure on the time split instead of 0.024 (Section 6.6 of the paper).
+Tested with Python 3.10 (pandas 2.3, numpy 2.2, scikit-learn 1.7, scipy 1.15, matplotlib 3.10) and Python 3.13 (pandas 3.0, numpy 2.5, scikit-learn 1.9, scipy 1.18). The results in the data archive were computed with the second set, which `requirements-lock.txt` pins (`pip install -r requirements-lock.txt`). With scikit-learn 1.7 or 1.8 in place of 1.9 (the other packages as pinned), regressions and rules give identical results, but those versions place the trees' histogram bins differently: the five-seed onset trees on price features, with and without exposure, then move by less than 0.006 in AP, and the escalation trees gain 0.051 from exposure on the time split instead of 0.024 (Supplementary Note of the paper).
 
 ## Reproduce the paper from the data archive
 
@@ -90,25 +90,50 @@ The last three scripts are new in version 1.2. Their outputs are not in the v1.1
 
 Onset prediction files (`preds_*.csv.gz`) store scores at full precision. `make_figures.py` and `paper_checks.py` read them with `float_precision='round_trip'`, which returns exactly the scores the models wrote; pandas' default parser can be off in the last bit.
 
-The table follows the sections of the current manuscript. A few commands also print checks from a longer earlier draft that the manuscript no longer reports: `paper_checks.py repeats`, `seeds` and `seedset`, the `--candidates known` contagion run, and `drop` on the sample without contradicted episodes.
+The table follows the current manuscript (Scientific Reports version). A few commands also print checks from a longer earlier draft that the manuscript no longer reports: `paper_checks.py repeats`, `seeds` and `seedset`, and `drop` on the sample without contradicted episodes.
 
 | Paper element | Source file |
 | --- | --- |
-| Table 2, Table A1 | `data/labels/episodes.csv`, `data/labels/checkpoint_report.md`, `data/labels/known_events_check.csv`, `data/labels/source_check.md` |
-| Table 4, Section 6.1 | `data/model/results.md`, `data/model/compare_preds.md`; `paper_checks.py repeats`, `horizon`, `chance` |
-| Table 5, Section 6.1 (hourly against daily data) | `data/model/daily_baseline.md`; `paper_checks.py closes` |
-| Table 6, Section 6.2 | `data/model/escalation_results.md`; `paper_checks.py waits` |
-| Table 7, Section 6.3 | `data/model/contagion_severe_results.md`, `data/model/contagion_all_results.md`, `data/model/contagion_baseline.md`; `paper_checks.py seeds` |
-| Contagion candidates known at the decision hour (not reported in the paper) | `make_contagion.py --candidates known --out data/model_known/contagion_severe.csv.gz`, then `run_contagion.py --data data/model_known/contagion_severe.csv.gz --out data/model_known` (~25 min) |
-| Sections 6.2 and 6.4 | `data/model/results.md`, `compare_preds.md`, `escalation_results.md`, `contagion_severe_results.md`, `contagion_power.md`; `paper_checks.py drift`, `drop`, `shock`, `synthetic` |
-| Table 8, Section 6.5 | `data/model/economic_magnitude.md`; without contradicted and on trade-supported episodes, the same file under `data/model_robust/` and `data/model_traded/` |
-| Section 6.6 | the same files under `data/model_robust/` and `data/model_traded/` (including `contagion_baseline.md`); `paper_checks.py separation`, and `drop` with `--data data/model_robust/escalation.csv.gz` and the flags in the script's header |
-| Section 7 | `paper_checks.py monitor`, `chance`, `waits` |
-| Section 5.1, single-seed trees; Section 6.6, scikit-learn 1.7; a second seed set (not reported in the paper) | `paper_checks.py treeseeds`, `paper_checks.py seedset` (~20 min); the scikit-learn 1.7 numbers come from rerunning `run_baselines.py`, `compare_preds.py` and `run_escalation.py` after `pip install scikit-learn==1.7.2` |
-| Fig. 2 | `data/labels/source_check.csv`, `data/labels/source_check_placebo.csv` |
-| Fig. 3 | `compare_preds.json`, `escalation_results.json`, `contagion_*_results.json` in `data/model/` and `data/model_robust/` |
-| Fig. 4 | `data/model/preds_*_72h.csv.gz`, `data/model/escalation.csv.gz`, `data/labels/labels_hourly.csv.gz`, `data/labels/episodes.csv` |
-| Fig. 5 | `data/model/contagion_power.json` |
+| Supplementary Tables S4 to S6 | `config/assets.json`, `data/labels/episodes.csv`, `data/labels/checkpoint_report.md`, `data/labels/known_events_check.csv`, `data/labels/source_check.md` |
+| Table 1; Results, onset | `data/model/results.md`, `data/model/compare_preds.md`; `paper_checks.py repeats`, `horizon`, `chance` |
+| Supplementary Table S2; Results, onset (hourly against daily data) | `data/model/daily_baseline.md`; `paper_checks.py closes` |
+| Table 2 and Supplementary Table S3; Results, escalation | `data/model/escalation_results.md`; `paper_checks.py waits` |
+| Table 3; Results, contagion | `data/model/contagion_severe_results.md`, `data/model/contagion_all_results.md`, `data/model/contagion_baseline.md`; `paper_checks.py seeds` |
+| Methods, contagion candidates counted from the episodes known at the decision hour | `make_contagion.py --candidates known --out data/model_known/contagion_severe.csv.gz`, then `run_contagion.py --data data/model_known/contagion_severe.csv.gz --out data/model_known` (~25 min) |
+| Results, escalation (drop-one-asset inference) and "Why lending exposure does not help" | `data/model/results.md`, `compare_preds.md`, `escalation_results.md`, `contagion_severe_results.md`, `contagion_power.md`; `paper_checks.py drift`, `drop`, `shock`, `synthetic` |
+| Table 4; Results, "What is at stake" | `data/model/economic_magnitude.md`; without contradicted and on trade-supported episodes, the same file under `data/model_robust/` and `data/model_traded/` |
+| Results, "Robustness and inference"; Supplementary Note; Supplementary Table S8 | the same files under `data/model_robust/` and `data/model_traded/` (including `contagion_baseline.md`); `paper_checks.py separation`, and `drop` with `--data data/model_robust/escalation.csv.gz` and the flags in the script's header |
+| Discussion (the monitor) | `paper_checks.py monitor`, `chance`, `waits` |
+| Methods, single-seed trees; Supplementary Note, scikit-learn 1.7; a second seed set (not reported in the paper) | `paper_checks.py treeseeds`, `paper_checks.py seedset` (~20 min); the scikit-learn 1.7 numbers come from rerunning `run_baselines.py`, `compare_preds.py` and `run_escalation.py` after `pip install scikit-learn==1.7.2` |
+| Supplementary Fig. S1 (`fig2_dex_check`) | `data/labels/source_check.csv`, `data/labels/source_check_placebo.csv` |
+| Fig. 2 (`fig3_exposure_effect`) | `compare_preds.json`, `escalation_results.json`, `contagion_*_results.json` in `data/model/` and `data/model_robust/` |
+| Fig. 3 (`fig4_warning_horizon`) | `data/model/preds_*_72h.csv.gz`, `data/model/escalation.csv.gz`, `data/labels/labels_hourly.csv.gz`, `data/labels/episodes.csv` |
+| Fig. 4 (`fig5_power`) | `data/model/contagion_power.json` |
+| Methods, look-ahead checks | `data/lookahead/` (see the next subsection) |
+
+### Look-ahead checks (Methods)
+
+The time split assigns an episode by its start, so three training episodes of the escalation table resolve only in October 2025, and with every episode as a seed, the follow windows of two training seeds of late September 2025 reach into October. The Methods report the results without them. From the archived tables (about 2 min per run):
+
+```bash
+mkdir -p data/lookahead/escalation data/lookahead/contagion_all
+python - <<'EOF'
+import shutil
+import pandas as pd
+late = ['ankrETH@2025-09-10 10:00:00+00:00', 'rswETH@2025-09-13 00:00:00+00:00', 'USDA@2025-09-25 17:00:00+00:00']
+esc = pd.read_csv('data/model/escalation.csv.gz')
+esc[~esc['episode_id'].isin(late)].to_csv('data/lookahead/escalation/escalation.csv.gz', index=False)
+shutil.copy('data/model/escalation_features.json', 'data/lookahead/escalation/')
+seeds = ['MIM@2025-09-25 18:00:00+00:00', 'USDA@2025-09-25 17:00:00+00:00']
+pairs = pd.read_csv('data/model/contagion_all.csv.gz')
+pairs[~pairs['seed_id'].isin(seeds)].to_csv('data/lookahead/contagion_all/contagion_all.csv.gz', index=False)
+shutil.copy('data/model/contagion_features.json', 'data/lookahead/contagion_all/')
+EOF
+python scripts/run_escalation.py --data data/lookahead/escalation/escalation.csv.gz --out data/lookahead/escalation --outcomes severe
+python scripts/run_contagion.py --seeds all --data data/lookahead/contagion_all/contagion_all.csv.gz --out data/lookahead/contagion_all --protocols time
+```
+
+In `data/lookahead/escalation/escalation_results.md` (severe, decided 1 h after the start), the regression's test AP falls from 0.554 to 0.490, and exposure changes it by −0.121 (−0.225 to −0.007) and the trees' AP by +0.006 (−0.053 to +0.084). In `data/lookahead/contagion_all/contagion_all_results.md` (followers within 7 days, time split), the graph links change AP by +0.005 (−0.003 to +0.016). The 88 pairs of the two seeds have no follower.
 
 ## Rebuild everything from public sources
 
